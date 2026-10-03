@@ -9,26 +9,27 @@ export default async function TemplatesPage() {
   const templates = await getTemplates();
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-amber-400 mb-1">
-            <span>MODULE 4.1</span>
-            <span>•</span>
-            <span>LAYOUT & PLACEHOLDER ENGINE</span>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <div className="w-5 h-[2px] bg-[#E2F952]" />
+            <span className="text-xs font-mono uppercase tracking-widest text-[#E2F952]">
+              MODULE 4.1 • LAYOUT DESIGN ENGINE
+            </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white font-serif">
+          <h1 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight">
             Certificate Templates
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-zinc-400 text-sm max-w-xl">
             Design certificate backgrounds, drag placeholder coordinates, and anchor cryptographic QR blocks.
           </p>
         </div>
 
         <Link
           href="/templates/new"
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-4 py-2.5 text-xs font-bold text-slate-950 shadow-md shadow-amber-500/20 hover:from-amber-400 hover:to-amber-500 transition-all self-start sm:self-auto"
+          className="btn-volt inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-bold self-start sm:self-auto"
         >
           <PlusCircle className="h-4 w-4 stroke-[2.5]" />
           <span>Create New Template</span>
@@ -36,54 +37,58 @@ export default async function TemplatesPage() {
       </div>
 
       {/* Templates Gallery Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {templates.map((tpl) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {templates.map((tpl, i) => (
           <div
             key={tpl.id}
-            className="flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-900/60 overflow-hidden hover:border-slate-700 transition-all shadow-lg group"
+            className={`flex flex-col justify-between rounded-3xl border overflow-hidden transition-all duration-300 shadow-xl group ${
+              i === 0
+                ? 'border-[#E2F952]/40 bg-[#111111]'
+                : 'border-white/10 bg-[#111111] hover:border-white/20'
+            }`}
           >
             {/* Visual Canvas Thumbnail Preview */}
-            <div className="p-4 bg-slate-950/80 border-b border-slate-800/80">
+            <div className="p-4 bg-black border-b border-white/10">
               <TemplateCanvas template={tpl} />
             </div>
 
             {/* Template Info & Metadata */}
-            <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
-              <div className="space-y-1.5">
+            <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+              <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-base text-slate-100 group-hover:text-amber-300 transition-colors">
+                  <h3 className="font-display font-bold text-base text-white group-hover:text-[#E2F952] transition-colors">
                     {tpl.name}
                   </h3>
-                  <span className="font-mono text-[10px] text-slate-400 bg-slate-800 px-2 py-0.5 rounded border border-slate-700">
+                  <span className="font-mono text-[10px] text-zinc-400 bg-white/5 px-2 py-0.5 rounded-full border border-white/10">
                     {tpl.width}×{tpl.height}
                   </span>
                 </div>
-                <p className="text-xs text-slate-400 line-clamp-2">
+                <p className="text-xs text-zinc-400 line-clamp-2">
                   {tpl.description}
                 </p>
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-slate-800/80">
-                <div className="flex items-center justify-between text-[11px] text-slate-400">
+              <div className="space-y-3 pt-3 border-t border-white/10">
+                <div className="flex items-center justify-between text-[11px] text-zinc-400">
                   <span className="flex items-center gap-1.5">
-                    <Layers className="h-3.5 w-3.5 text-amber-400" />
+                    <Layers className="h-3.5 w-3.5 text-[#E2F952]" />
                     <span>Placeholders:</span>
                   </span>
-                  <span className="font-mono text-slate-200">
+                  <span className="font-mono text-white">
                     {tpl.placeholders.length} fields ({tpl.placeholders.filter((p) => p.required).length} required)
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 pt-2">
+                <div className="flex items-center gap-2 pt-1">
                   <Link
                     href={`/templates/${tpl.id}`}
-                    className="flex-1 text-center py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition-colors"
+                    className="btn-glass flex-1 text-center py-2.5 text-xs font-semibold"
                   >
-                    Edit Layout & Coordinates
+                    Edit Layout
                   </Link>
                   <Link
                     href={`/batches/new`}
-                    className="inline-flex items-center justify-center gap-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 px-3 py-2 text-xs font-semibold transition-colors"
+                    className="inline-flex items-center justify-center gap-1 rounded-full bg-[#E2F952]/10 hover:bg-[#E2F952]/20 text-[#E2F952] border border-[#E2F952]/30 px-4 py-2.5 text-xs font-bold transition-colors"
                     title="Issue batch using this template"
                   >
                     <span>Use</span>

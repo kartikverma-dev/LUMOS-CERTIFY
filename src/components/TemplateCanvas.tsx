@@ -27,6 +27,13 @@ export default function TemplateCanvas({
   // Background styling CSS classes / inline styles
   const getBackgroundStyle = () => {
     switch (template.backgroundStyle) {
+      case 'voltaire-volt':
+        return {
+          backgroundColor: '#050505',
+          border: '4px solid #E2F952',
+          backgroundImage: 'radial-gradient(rgba(226, 249, 82, 0.08) 1.5px, transparent 1.5px)',
+          backgroundSize: '24px 24px',
+        };
       case 'executive-gold':
         return {
           backgroundColor: '#0B1329',
@@ -105,6 +112,18 @@ export default function TemplateCanvas({
       className="relative w-full aspect-[1056/816] rounded-xl overflow-hidden shadow-2xl select-none"
       style={getBackgroundStyle()}
     >
+      {/* Decorative inner frame for Voltaire Volt */}
+      {template.backgroundStyle === 'voltaire-volt' && (
+        <div className="absolute inset-3 border border-white/10 pointer-events-none rounded-lg">
+          <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#E2F952]" />
+          <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-[#E2F952]" />
+          <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-[#E2F952]" />
+          <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#E2F952]" />
+          {/* Subtle horizontal volt accent */}
+          <div className="absolute top-8 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-[#E2F952]/30 to-transparent" />
+        </div>
+      )}
+
       {/* Decorative inner frame for Executive Gold */}
       {template.backgroundStyle === 'executive-gold' && (
         <div className="absolute inset-3 border border-amber-500/40 pointer-events-none rounded-sm">

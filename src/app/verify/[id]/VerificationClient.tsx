@@ -32,13 +32,13 @@ export default function VerificationClient({
     if (result.state === 'VERIFIED') {
       try {
         confetti({
-          particleCount: 50,
-          spread: 60,
+          particleCount: 60,
+          spread: 70,
           origin: { y: 0.6 },
-          colors: ['#F59E0B', '#10B981', '#06B6D4'],
+          colors: ['#E2F952', '#FFFFFF', '#10B981'],
         });
       } catch {
-        // Ignore in environments where confetti canvas is unavailable
+        // Fallback
       }
     }
   }, [result.state]);
@@ -52,17 +52,17 @@ export default function VerificationClient({
   };
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 space-y-8 animate-in fade-in duration-300">
+    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8 space-y-8 animate-in fade-in duration-300">
       {/* Navigation Breadcrumb */}
       <div className="flex items-center justify-between">
         <Link
           href="/verify"
-          className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-400 hover:text-white transition-colors"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           <span>Back to Verification Portal</span>
         </Link>
-        <span className="text-[11px] font-mono text-slate-500">
+        <span className="text-[11px] font-mono text-zinc-500">
           Timestamp: {new Date(result.verification_timestamp).toLocaleString()}
         </span>
       </div>
@@ -71,73 +71,73 @@ export default function VerificationClient({
       {result.state === 'VERIFIED' && (
         <div className="space-y-6">
           {/* Hero Verified Banner */}
-          <div className="relative overflow-hidden rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-950/40 via-slate-900 to-slate-950 p-8 text-center shadow-2xl">
-            <div className="absolute top-0 right-1/2 translate-x-1/2 -mt-10 h-32 w-32 rounded-full bg-emerald-500/10 blur-2xl pointer-events-none" />
+          <div className="relative overflow-hidden rounded-3xl border border-[#E2F952]/40 bg-gradient-to-b from-zinc-900 via-black to-black p-8 sm:p-10 text-center shadow-2xl">
+            <div className="absolute top-0 right-1/2 translate-x-1/2 -mt-10 h-40 w-40 rounded-full bg-[#E2F952]/10 blur-3xl pointer-events-none" />
 
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 shadow-lg shadow-emerald-500/20 mb-4 animate-in zoom-in-75 duration-300">
-              <CheckCircle2 className="h-9 w-9 stroke-[2.5]" />
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#E2F952] text-black shadow-lg shadow-[#E2F952]/20 mb-5 animate-in zoom-in-75 duration-300">
+              <CheckCircle2 className="h-9 w-9 stroke-[2.8]" />
             </div>
 
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-300 border border-emerald-500/20 mb-2">
-              <Key className="h-3 w-3" />
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-[#E2F952]/10 px-3.5 py-1 text-xs font-bold text-[#E2F952] border border-[#E2F952]/30 mb-3">
+              <Key className="h-3 w-3 stroke-[2.5]" />
               <span>Ed25519 Cryptographic Proof Confirmed</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white font-serif">
-              Authentic & Verified Certificate
+            <h1 className="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight">
+              Authentic &amp; Verified Credential
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto mt-2">
-              This certificate record is authenticated directly against the immutable server registry. The signature is tamper-evident and cryptographically valid.
+            <p className="text-xs sm:text-sm text-zinc-400 max-w-lg mx-auto mt-2 leading-relaxed">
+              Authenticated directly against the immutable server registry. The signature is tamper-evident and cryptographically valid.
             </p>
           </div>
 
           {/* Certificate Credential Dossier */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6 sm:p-8 space-y-6 shadow-xl">
-            <div className="border-b border-slate-800 pb-4">
-              <span className="text-[10px] uppercase font-mono tracking-wider text-amber-400">
-                Official Credential Record
+          <div className="rounded-3xl border border-white/10 bg-[#111111] p-8 space-y-8 shadow-xl">
+            <div className="border-b border-white/10 pb-5">
+              <span className="text-[10px] uppercase font-mono tracking-widest text-[#E2F952]">
+                ACCREDITATION SPECIFICATION
               </span>
-              <h2 className="text-2xl font-bold text-white mt-1">
+              <h2 className="text-2xl font-display font-bold text-white mt-1">
                 {result.credential}
               </h2>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs">
               <div className="space-y-1">
-                <span className="text-slate-400 uppercase font-mono text-[10px]">Recipient Name</span>
-                <p className="text-base font-bold text-slate-100">{result.recipient_name}</p>
+                <span className="text-zinc-500 uppercase font-mono text-[10px]">Recipient Name</span>
+                <p className="text-lg font-display font-bold text-white">{result.recipient_name}</p>
               </div>
 
               <div className="space-y-1">
-                <span className="text-slate-400 uppercase font-mono text-[10px]">Certificate Identifier</span>
-                <p className="text-base font-bold font-mono text-amber-300">{result.cert_id}</p>
+                <span className="text-zinc-500 uppercase font-mono text-[10px]">Certificate Identifier</span>
+                <p className="text-lg font-mono font-bold text-[#E2F952]">{result.cert_id}</p>
               </div>
 
               <div className="space-y-1">
-                <span className="text-slate-400 uppercase font-mono text-[10px]">Date of Issuance</span>
-                <p className="text-sm font-semibold text-slate-200">{result.issue_date}</p>
+                <span className="text-zinc-500 uppercase font-mono text-[10px]">Date of Issuance</span>
+                <p className="text-sm font-semibold text-zinc-200">{result.issue_date}</p>
               </div>
 
               <div className="space-y-1">
-                <span className="text-slate-400 uppercase font-mono text-[10px]">Issuing Institution</span>
-                <p className="text-sm font-semibold text-slate-200">{result.issuer_name}</p>
+                <span className="text-zinc-500 uppercase font-mono text-[10px]">Issuing Authority</span>
+                <p className="text-sm font-semibold text-zinc-200">{result.issuer_name}</p>
               </div>
 
               <div className="space-y-1 sm:col-span-2">
-                <span className="text-slate-400 uppercase font-mono text-[10px]">Canonical SHA-256 Digest</span>
-                <p className="font-mono text-[11px] text-cyan-400 bg-slate-950 p-2.5 rounded-lg border border-slate-800 break-all select-all">
+                <span className="text-zinc-500 uppercase font-mono text-[10px]">Canonical SHA-256 Digest</span>
+                <p className="font-mono text-[11px] text-[#E2F952] bg-black p-3 rounded-xl border border-white/10 break-all select-all">
                   {result.canonical_hash}
                 </p>
               </div>
             </div>
 
             {/* Action CTAs */}
-            <div className="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-slate-800">
+            <div className="flex flex-col sm:flex-row items-center gap-3 pt-6 border-t border-white/10">
               <a
                 href={`/api/certificates/${result.cert_id}/pdf`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-5 py-3 text-xs font-bold text-slate-950 shadow-md shadow-amber-500/20 hover:from-amber-400 hover:to-amber-500 transition-all"
+                className="btn-volt w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 py-3.5 text-xs font-bold"
               >
                 <Download className="h-4 w-4 stroke-[2.5]" />
                 <span>Download Official Certificate PDF</span>
@@ -146,16 +146,16 @@ export default function VerificationClient({
               <button
                 type="button"
                 onClick={handleShare}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 px-4 py-3 text-xs font-semibold text-slate-200 transition-colors"
+                className="btn-glass w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-semibold"
               >
                 {copiedLink ? (
                   <>
-                    <Check className="h-4 w-4 text-emerald-400" />
-                    <span className="text-emerald-400">Copied Link!</span>
+                    <Check className="h-4 w-4 text-[#E2F952]" />
+                    <span className="text-[#E2F952]">Copied Link!</span>
                   </>
                 ) : (
                   <>
-                    <Share2 className="h-4 w-4 text-slate-400" />
+                    <Share2 className="h-4 w-4 text-zinc-400" />
                     <span>Share Proof Link</span>
                   </>
                 )}
@@ -168,28 +168,26 @@ export default function VerificationClient({
       {/* STATE 2: REVOKED */}
       {result.state === 'REVOKED' && (
         <div className="space-y-6">
-          {/* Hero Revoked Banner */}
-          <div className="relative overflow-hidden rounded-2xl border border-rose-500/40 bg-gradient-to-b from-rose-950/50 via-slate-900 to-slate-950 p-8 text-center shadow-2xl">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-400 shadow-lg shadow-rose-500/20 mb-4 animate-in zoom-in-75 duration-300">
-              <XCircle className="h-9 w-9 stroke-[2.5]" />
+          <div className="relative overflow-hidden rounded-3xl border border-rose-500/40 bg-gradient-to-b from-rose-950/40 via-black to-black p-8 sm:p-10 text-center shadow-2xl">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-rose-500 text-black shadow-lg shadow-rose-500/20 mb-5 animate-in zoom-in-75 duration-300">
+              <XCircle className="h-9 w-9 stroke-[2.8]" />
             </div>
 
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/10 px-3 py-1 text-xs font-semibold text-rose-300 border border-rose-500/20 mb-2">
-              <ShieldAlert className="h-3 w-3" />
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/10 px-3.5 py-1 text-xs font-bold text-rose-400 border border-rose-500/30 mb-3">
+              <ShieldAlert className="h-3 w-3 stroke-[2.5]" />
               <span>Official Registry Revocation Notice</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-rose-200 font-serif">
+            <h1 className="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight">
               Certificate Revoked
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto mt-2">
+            <p className="text-xs sm:text-sm text-zinc-400 max-w-lg mx-auto mt-2 leading-relaxed">
               This certificate was originally issued by the institution, but has subsequently been <strong>withdrawn and invalidated</strong>.
             </p>
           </div>
 
-          {/* Revocation Details */}
-          <div className="rounded-2xl border border-rose-500/20 bg-slate-900/70 p-6 sm:p-8 space-y-6 shadow-xl">
-            <div className="rounded-xl bg-rose-950/30 border border-rose-500/30 p-4 space-y-2">
+          <div className="rounded-3xl border border-rose-500/20 bg-[#111111] p-8 space-y-6 shadow-xl">
+            <div className="rounded-2xl bg-rose-950/30 border border-rose-500/30 p-5 space-y-2">
               <span className="text-[10px] uppercase font-mono font-bold text-rose-400">
                 Mandatory Revocation Audit Reason
               </span>
@@ -197,7 +195,7 @@ export default function VerificationClient({
                 &ldquo;{result.revocation_reason}&rdquo;
               </p>
               {result.revoked_at && (
-                <p className="text-[11px] text-slate-400 font-mono pt-1">
+                <p className="text-[11px] text-zinc-400 font-mono pt-1">
                   Revoked on: {new Date(result.revoked_at).toLocaleString()}
                 </p>
               )}
@@ -205,24 +203,24 @@ export default function VerificationClient({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               <div>
-                <span className="text-slate-400 font-mono text-[10px] uppercase">Certificate ID</span>
-                <p className="font-mono text-sm font-bold text-slate-200">{result.cert_id}</p>
+                <span className="text-zinc-500 font-mono text-[10px] uppercase">Certificate ID</span>
+                <p className="font-mono text-sm font-bold text-white">{result.cert_id}</p>
               </div>
               <div>
-                <span className="text-slate-400 font-mono text-[10px] uppercase">Originally Awarded To</span>
-                <p className="font-bold text-slate-200">{result.recipient_name}</p>
+                <span className="text-zinc-500 font-mono text-[10px] uppercase">Originally Awarded To</span>
+                <p className="font-bold text-white">{result.recipient_name}</p>
               </div>
               <div>
-                <span className="text-slate-400 font-mono text-[10px] uppercase">Credential</span>
-                <p className="font-semibold text-slate-300">{result.credential}</p>
+                <span className="text-zinc-500 font-mono text-[10px] uppercase">Credential</span>
+                <p className="font-semibold text-zinc-300">{result.credential}</p>
               </div>
               <div>
-                <span className="text-slate-400 font-mono text-[10px] uppercase">Original Issue Date</span>
-                <p className="font-semibold text-slate-300">{result.issue_date}</p>
+                <span className="text-zinc-500 font-mono text-[10px] uppercase">Original Issue Date</span>
+                <p className="font-semibold text-zinc-300">{result.issue_date}</p>
               </div>
             </div>
 
-            <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400 leading-relaxed">
+            <div className="p-4 rounded-xl bg-black border border-white/10 text-[11px] text-zinc-400 leading-relaxed">
               <strong>Institutional Advisory:</strong> Do not accept this certificate as proof of qualification, achievement, or accreditation.
             </div>
           </div>
@@ -232,27 +230,27 @@ export default function VerificationClient({
       {/* STATE 3: NOT FOUND */}
       {result.state === 'NOT_FOUND' && (
         <div className="space-y-6">
-          <div className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-950/30 via-slate-900 to-slate-950 p-8 text-center shadow-2xl">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 shadow-lg shadow-amber-500/20 mb-4 animate-in zoom-in-75 duration-300">
-              <AlertTriangle className="h-9 w-9 stroke-[2.2]" />
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-zinc-900 to-black p-8 sm:p-10 text-center shadow-2xl">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-zinc-800 text-zinc-300 shadow-lg mb-5 animate-in zoom-in-75 duration-300">
+              <AlertTriangle className="h-9 w-9 stroke-[2.4]" />
             </div>
 
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-300 border border-amber-500/20 mb-2">
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-3.5 py-1 text-xs font-bold text-zinc-300 border border-white/10 mb-3">
               <ShieldAlert className="h-3 w-3" />
               <span>Tamper-Evident Security Warning</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white font-serif">
-              Certificate Not Found or Verification Failed
+            <h1 className="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight">
+              Certificate Not Found
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto mt-2">
-              The identifier <code className="font-mono text-amber-300 font-semibold">{queriedId}</code> does not match any valid record in the registry, or the cryptographic digital signature failed verification.
+            <p className="text-xs sm:text-sm text-zinc-400 max-w-lg mx-auto mt-2 leading-relaxed">
+              The identifier <code className="font-mono text-[#E2F952] font-semibold">{queriedId}</code> does not match any valid record in the registry, or the cryptographic digital signature failed verification.
             </p>
           </div>
 
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6 sm:p-8 space-y-4 shadow-xl text-xs text-slate-300 leading-relaxed">
-            <h3 className="font-bold text-slate-200 text-sm">Security & Tamper Protections:</h3>
-            <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
+          <div className="rounded-3xl border border-white/10 bg-[#111111] p-8 space-y-4 shadow-xl text-xs text-zinc-300 leading-relaxed">
+            <h3 className="font-bold text-white text-sm">Security &amp; Tamper Protections:</h3>
+            <ul className="list-disc pl-5 space-y-2 text-zinc-400">
               <li>
                 <strong>Cryptographic Anchor Rule:</strong> A certificate QR cannot be forged or altered. Even if a valid Certificate ID is guessed, it will fail without the corresponding Ed25519 asymmetric signature.
               </li>
@@ -264,7 +262,7 @@ export default function VerificationClient({
             <div className="pt-4 flex flex-col sm:flex-row items-center gap-3">
               <Link
                 href="/verify"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 hover:bg-amber-400 px-5 py-2.5 text-xs font-bold text-slate-950 transition-colors"
+                className="btn-volt w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-bold"
               >
                 <ScanLine className="h-4 w-4" />
                 <span>Scan Another Certificate</span>

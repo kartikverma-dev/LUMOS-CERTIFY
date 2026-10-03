@@ -42,7 +42,48 @@ export async function renderCertificatePdf(
   const courierBold = await pdfDoc.embedFont(StandardFonts.CourierBold);
 
   // 1. Draw Background
-  if (template.backgroundStyle === 'executive-gold') {
+  if (template.backgroundStyle === 'voltaire-volt') {
+    // Pitch obsidian base
+    page.drawRectangle({
+      x: 0,
+      y: 0,
+      width: pageWidth,
+      height: pageHeight,
+      color: hexToRgb('#050505'),
+    });
+
+    // Volt electric outer border
+    page.drawRectangle({
+      x: 20,
+      y: 20,
+      width: pageWidth - 40,
+      height: pageHeight - 40,
+      borderColor: hexToRgb('#E2F952'),
+      borderWidth: 2,
+    });
+
+    // Inner subtle border
+    page.drawRectangle({
+      x: 26,
+      y: 26,
+      width: pageWidth - 52,
+      height: pageHeight - 52,
+      borderColor: hexToRgb('#27272A'),
+      borderWidth: 0.75,
+    });
+
+    // Volt corner notches
+    const volt = hexToRgb('#E2F952');
+    const cornerSize = 22;
+    page.drawLine({ start: { x: 30, y: pageHeight - 30 }, end: { x: 30 + cornerSize, y: pageHeight - 30 }, color: volt, thickness: 2.5 });
+    page.drawLine({ start: { x: 30, y: pageHeight - 30 }, end: { x: 30, y: pageHeight - 30 - cornerSize }, color: volt, thickness: 2.5 });
+    page.drawLine({ start: { x: pageWidth - 30, y: pageHeight - 30 }, end: { x: pageWidth - 30 - cornerSize, y: pageHeight - 30 }, color: volt, thickness: 2.5 });
+    page.drawLine({ start: { x: pageWidth - 30, y: pageHeight - 30 }, end: { x: pageWidth - 30, y: pageHeight - 30 - cornerSize }, color: volt, thickness: 2.5 });
+    page.drawLine({ start: { x: 30, y: 30 }, end: { x: 30 + cornerSize, y: 30 }, color: volt, thickness: 2.5 });
+    page.drawLine({ start: { x: 30, y: 30 }, end: { x: 30, y: 30 + cornerSize }, color: volt, thickness: 2.5 });
+    page.drawLine({ start: { x: pageWidth - 30, y: 30 }, end: { x: pageWidth - 30 - cornerSize, y: 30 }, color: volt, thickness: 2.5 });
+    page.drawLine({ start: { x: pageWidth - 30, y: 30 }, end: { x: pageWidth - 30, y: 30 + cornerSize }, color: volt, thickness: 2.5 });
+  } else if (template.backgroundStyle === 'executive-gold') {
     // Deep royal navy base
     page.drawRectangle({
       x: 0,

@@ -23,6 +23,125 @@ interface DatabaseSchema {
 
 const DEFAULT_TEMPLATES: CertificateTemplate[] = [
   {
+    id: 'template-voltaire-volt',
+    name: 'Voltaire Obsidian & Electric Volt',
+    description: 'Hyper-luxury obsidian design with high-voltage neon yellow accents, bold display typography, and tamper-evident QR seal.',
+    width: 1056,
+    height: 816,
+    backgroundStyle: 'voltaire-volt',
+    placeholders: [
+      {
+        id: 'v-inst',
+        key: 'issuer_name',
+        label: 'Issuing Authority',
+        x: 50,
+        y: 16,
+        fontSize: 20,
+        fontFamily: 'sans',
+        fontWeight: 'bold',
+        color: '#E2F952',
+        textAlign: 'center',
+        required: true,
+        sampleValue: 'LUMOS AUTONOMOUS PROTOCOL',
+      },
+      {
+        id: 'v-title',
+        key: 'certificate_title',
+        label: 'Accreditation Title',
+        x: 50,
+        y: 25,
+        fontSize: 13,
+        fontFamily: 'mono',
+        fontWeight: 'normal',
+        color: '#71717A',
+        textAlign: 'center',
+        required: false,
+        sampleValue: 'CRYPTOGRAPHIC CERTIFICATE OF DISTINCTION',
+      },
+      {
+        id: 'v-name',
+        key: 'name',
+        label: 'Recipient Name',
+        x: 50,
+        y: 38,
+        fontSize: 38,
+        fontFamily: 'sans',
+        fontWeight: 'bold',
+        color: '#FFFFFF',
+        textAlign: 'center',
+        required: true,
+        sampleValue: 'Asha Verma',
+      },
+      {
+        id: 'v-for',
+        key: 'purpose_text',
+        label: 'Conferral Statement',
+        x: 50,
+        y: 48,
+        fontSize: 13,
+        fontFamily: 'sans',
+        fontWeight: 'normal',
+        color: '#A1A1AA',
+        textAlign: 'center',
+        required: false,
+        sampleValue: 'for rigorous completion and verifiable technical mastery in',
+      },
+      {
+        id: 'v-cred',
+        key: 'credential',
+        label: 'Conferred Credential',
+        x: 50,
+        y: 57,
+        fontSize: 26,
+        fontFamily: 'sans',
+        fontWeight: 'bold',
+        color: '#E2F952',
+        textAlign: 'center',
+        required: true,
+        sampleValue: 'Advanced Cryptographic Systems & Zero-Knowledge Architecture',
+      },
+      {
+        id: 'v-date',
+        key: 'issue_date',
+        label: 'Issuance Date',
+        x: 25,
+        y: 78,
+        fontSize: 12,
+        fontFamily: 'mono',
+        fontWeight: 'normal',
+        color: '#71717A',
+        textAlign: 'center',
+        required: true,
+        sampleValue: '2026-10-02',
+      },
+      {
+        id: 'v-id',
+        key: 'cert_id',
+        label: 'Certificate Identifier',
+        x: 50,
+        y: 88,
+        fontSize: 13,
+        fontFamily: 'mono',
+        fontWeight: 'bold',
+        color: '#E2F952',
+        textAlign: 'center',
+        required: false,
+        sampleValue: 'CERT-2026-000001',
+      },
+    ],
+    qrConfig: {
+      x: 82,
+      y: 72,
+      size: 110,
+      darkColor: '#000000',
+      lightColor: '#E2F952',
+      includeLabel: true,
+      label: 'TAMPER PROOF',
+    },
+    createdAt: '2026-10-01T10:00:00Z',
+    updatedAt: '2026-10-01T10:00:00Z',
+  },
+  {
     id: 'template-executive-gold',
     name: 'Executive Distinction (Gold & Navy)',
     description: 'Prestigious corporate & executive certificate with gold geometric borders, serif typography, and cryptographic QR seal.',
@@ -570,9 +689,15 @@ function loadDb(): DatabaseSchema {
     if (fs.existsSync(filePath)) {
       const content = fs.readFileSync(filePath, 'utf8');
       const parsed = JSON.parse(content);
-      // Ensure default templates exist
+      // Ensure default templates exist & merge any newly added defaults
       if (!parsed.templates || parsed.templates.length === 0) {
-        parsed.templates = DEFAULT_TEMPLATES;
+        parsed.templates = [...DEFAULT_TEMPLATES];
+      } else {
+        for (const defTpl of DEFAULT_TEMPLATES) {
+          if (!parsed.templates.some((t: CertificateTemplate) => t.id === defTpl.id)) {
+            parsed.templates.unshift(defTpl);
+          }
+        }
       }
       memoryDb = parsed;
       return memoryDb!;

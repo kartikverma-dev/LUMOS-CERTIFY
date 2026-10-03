@@ -165,7 +165,7 @@ export default function TemplateDesignerEditor({
             onClick={handleSave}
             type="button"
             disabled={isSaving}
-            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 px-4 py-2 text-xs font-bold text-slate-950 shadow-md shadow-amber-500/20 transition-all"
+            className="btn-volt inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold"
           >
             {saveSuccess ? (
               <>
@@ -594,6 +594,7 @@ export default function TemplateDesignerEditor({
                 <label className="block text-slate-400 mb-2">Preset Aesthetic</label>
                 <div className="grid grid-cols-2 gap-2">
                   {[
+                    { id: 'voltaire-volt', label: 'Voltaire Obsidian & Volt' },
                     { id: 'executive-gold', label: 'Executive Gold & Navy' },
                     { id: 'tech-blue', label: 'Tech Obsidian & Cyan' },
                     { id: 'classic-crimson', label: 'Classic Ivory & Crimson' },

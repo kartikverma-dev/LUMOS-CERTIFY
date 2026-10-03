@@ -23,7 +23,6 @@ export default function QrScannerModal({ onClose }: QrScannerModalProps) {
 
   const processDecodedString = useCallback((decodedText: string) => {
     try {
-      // Check if it's a verify URL, e.g., https://lumos-certify.example.com/verify/CERT-2026-000001?sig=XYZ
       let certId = '';
       let sig = '';
 
@@ -33,13 +32,11 @@ export default function QrScannerModal({ onClose }: QrScannerModalProps) {
         certId = decodeURIComponent(segments[segments.length - 1] || '');
         sig = url.searchParams.get('sig') || '';
       } else if (decodedText.startsWith('CERT-')) {
-        // Raw cert ID
         certId = decodedText;
       }
 
       if (certId) {
         setSuccessInfo({ certId, sig });
-        // Redirect after short delay so user sees confirmation
         setTimeout(() => {
           onClose();
           const targetUrl = sig
@@ -180,65 +177,65 @@ export default function QrScannerModal({ onClose }: QrScannerModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-in fade-in duration-200">
+      <div className="relative w-full max-w-md rounded-3xl border border-white/10 bg-[#111111] shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
           <div className="flex items-center gap-2">
-            <div className="h-2.5 w-2.5 rounded-full bg-amber-400 animate-pulse" />
-            <h3 className="font-semibold text-slate-100 text-base">QR Certificate Scanner</h3>
+            <div className="h-2.5 w-2.5 rounded-full bg-[#E2F952] animate-pulse" />
+            <h3 className="font-display font-bold text-white text-base">QR Certificate Scanner</h3>
           </div>
           <button
             onClick={() => {
               stopCamera();
               onClose();
             }}
-            className="rounded-lg p-1 text-slate-400 hover:bg-slate-800 hover:text-white"
+            className="rounded-full p-1 text-zinc-400 hover:text-white"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex border-b border-slate-800 bg-slate-950/60 p-1">
+        <div className="flex border-b border-white/10 bg-black/40 p-1.5">
           <button
             onClick={() => setActiveTab('camera')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold transition-all ${
+            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-full text-xs font-semibold transition-all ${
               activeTab === 'camera'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-[#E2F952] text-black font-bold'
+                : 'text-zinc-400 hover:text-white'
             }`}
           >
-            <Camera className="h-4 w-4" />
-            Live Camera
+            <Camera className="h-3.5 w-3.5" />
+            <span>Live Camera</span>
           </button>
           <button
             onClick={() => setActiveTab('upload')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold transition-all ${
+            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-full text-xs font-semibold transition-all ${
               activeTab === 'upload'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-[#E2F952] text-black font-bold'
+                : 'text-zinc-400 hover:text-white'
             }`}
           >
-            <Upload className="h-4 w-4" />
-            Upload Image
+            <Upload className="h-3.5 w-3.5" />
+            <span>Upload Image</span>
           </button>
         </div>
 
         {/* Content */}
         <div className="p-6">
           {successInfo ? (
-            <div className="rounded-xl bg-emerald-950/50 border border-emerald-500/30 p-6 text-center space-y-3">
-              <CheckCircle2 className="h-10 w-10 text-emerald-400 mx-auto animate-bounce" />
+            <div className="rounded-2xl bg-[#E2F952]/10 border border-[#E2F952]/40 p-6 text-center space-y-3">
+              <CheckCircle2 className="h-10 w-10 text-[#E2F952] mx-auto animate-bounce" />
               <div>
-                <p className="font-bold text-emerald-200 text-sm">Certificate QR Detected!</p>
-                <p className="font-mono text-xs text-emerald-300 mt-1">{successInfo.certId}</p>
+                <p className="font-display font-bold text-white text-sm">Certificate QR Detected!</p>
+                <p className="font-mono text-xs text-[#E2F952] mt-1">{successInfo.certId}</p>
               </div>
-              <p className="text-[11px] text-emerald-400/80">Verifying signature with server registry...</p>
+              <p className="text-[11px] text-zinc-400">Verifying signature with server registry...</p>
             </div>
           ) : activeTab === 'camera' ? (
             <div className="space-y-4">
-              <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black border border-slate-800 flex items-center justify-center">
+              <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-black border border-white/10 flex items-center justify-center">
                 <video
                   ref={videoRef}
                   playsInline
@@ -246,28 +243,28 @@ export default function QrScannerModal({ onClose }: QrScannerModalProps) {
                   className="h-full w-full object-cover"
                 />
                 {/* Viewfinder overlay */}
-                <div className="absolute inset-8 border-2 border-dashed border-amber-400/60 rounded-xl pointer-events-none flex items-center justify-center">
-                  <div className="h-12 w-12 border-2 border-amber-400 rounded-lg animate-ping opacity-25" />
+                <div className="absolute inset-8 border-2 border-dashed border-[#E2F952]/60 rounded-2xl pointer-events-none flex items-center justify-center">
+                  <div className="h-12 w-12 border-2 border-[#E2F952] rounded-xl animate-ping opacity-25" />
                 </div>
                 {!isScanning && (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/80 p-4 text-center">
-                    <RefreshCw className="h-8 w-8 text-amber-400 animate-spin mb-2" />
-                    <p className="text-xs text-slate-300">Initializing camera sensor...</p>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 p-4 text-center">
+                    <RefreshCw className="h-8 w-8 text-[#E2F952] animate-spin mb-2" />
+                    <p className="text-xs text-zinc-400">Initializing camera sensor...</p>
                   </div>
                 )}
               </div>
-              <p className="text-center text-xs text-slate-400">
+              <p className="text-center text-xs text-zinc-400">
                 Center the certificate&apos;s QR code in the viewport to verify instantly.
               </p>
             </div>
           ) : (
             <div className="space-y-4">
-              <label className="flex flex-col items-center justify-center aspect-square w-full rounded-xl border-2 border-dashed border-slate-700 hover:border-amber-500/60 bg-slate-950/40 hover:bg-slate-950/80 cursor-pointer p-6 transition-all group">
-                <Upload className="h-10 w-10 text-slate-500 group-hover:text-amber-400 mb-3 transition-colors" />
-                <span className="text-sm font-medium text-slate-200 group-hover:text-amber-300">
+              <label className="flex flex-col items-center justify-center aspect-square w-full rounded-2xl border-2 border-dashed border-white/15 hover:border-[#E2F952]/60 bg-black/50 hover:bg-black/80 cursor-pointer p-6 transition-all group">
+                <Upload className="h-10 w-10 text-zinc-500 group-hover:text-[#E2F952] mb-3 transition-colors" />
+                <span className="text-sm font-display font-bold text-white group-hover:text-[#E2F952]">
                   Select Certificate Photo or QR
                 </span>
-                <span className="text-xs text-slate-500 mt-1">PNG, JPG, WebP up to 10MB</span>
+                <span className="text-xs font-mono text-zinc-500 mt-1">PNG, JPG, WebP up to 10MB</span>
                 <input
                   type="file"
                   accept="image/*"
@@ -280,15 +277,15 @@ export default function QrScannerModal({ onClose }: QrScannerModalProps) {
 
           {/* Error Message */}
           {errorMessage && (
-            <div className="mt-4 flex items-start gap-2.5 rounded-lg bg-red-950/40 border border-red-500/30 p-3 text-red-200 text-xs">
-              <AlertCircle className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
+            <div className="mt-4 flex items-start gap-2.5 rounded-2xl bg-rose-950/40 border border-rose-500/30 p-3.5 text-rose-200 text-xs">
+              <AlertCircle className="h-4 w-4 text-rose-400 shrink-0 mt-0.5" />
               <span>{errorMessage}</span>
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="border-t border-slate-800 bg-slate-950/40 px-6 py-3 flex items-center justify-between text-[11px] text-slate-500">
+        <div className="border-t border-white/10 bg-black/40 px-6 py-3 flex items-center justify-between text-[11px] font-mono text-zinc-500">
           <span>Cryptographic QR Reader</span>
           <span>RFC 8032</span>
         </div>

@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #020617;
-  --foreground: #f8fafc;
+  --background: #050505;
+  --foreground: #f3f3f3;
 }
 
 body {
@@ -14,27 +14,77 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom scrollbars */
+/* Custom sleek scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: #050505;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #222222;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #E2F952;
 }
 
 @layer utilities {
+  .font-display {
+    font-family: var(--font-display), var(--font-inter), sans-serif;
+  }
   .font-mono {
     font-family: var(--font-mono), monospace;
   }
+}
+
+/* Luxury Card Glow & Micro-interactions */
+.card-luxury {
+  background: linear-gradient(180deg, rgba(24, 24, 27, 0.6) 0%, rgba(9, 9, 11, 0.8) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-luxury:hover {
+  border-color: rgba(226, 249, 82, 0.35);
+  box-shadow: 0 10px 30px -10px rgba(226, 249, 82, 0.08);
+}
+
+/* Luxury Volt Button */
+.btn-volt {
+  background-color: #E2F952;
+  color: #000000;
+  font-weight: 700;
+  border-radius: 9999px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-volt:hover {
+  background-color: #d2ec39;
+  box-shadow: 0 0 25px rgba(226, 249, 82, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-volt:active {
+  transform: scale(0.98);
+}
+
+/* Dark Glass Pill */
+.btn-glass {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-radius: 9999px;
+  backdrop-filter: blur(12px);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
 }

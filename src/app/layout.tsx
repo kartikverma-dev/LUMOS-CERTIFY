@@ -1,8 +1,14 @@
 import type { Metadata } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Inter, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: '--font-display',
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+});
 
 const inter = Inter({
   variable: '--font-inter',
@@ -26,9 +32,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-amber-500/30 selection:text-amber-200`}
+        className={`${plusJakartaSans.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased bg-[#050505] text-[#F3F3F3] min-h-screen flex flex-col font-sans selection:bg-[#E2F952] selection:text-black`}
       >
         <Navbar />
         <main className="flex-1 flex flex-col">{children}</main>

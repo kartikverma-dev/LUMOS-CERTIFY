@@ -29,7 +29,7 @@ export interface CertificateTemplate {
   description: string;
   width: number; // 1056 = standard A4 / US Letter landscape at 72/96dpi
   height: number; // 816
-  backgroundStyle: 'executive-gold' | 'tech-blue' | 'classic-crimson' | 'modern-emerald' | 'custom';
+  backgroundStyle: 'voltaire-volt' | 'executive-gold' | 'tech-blue' | 'classic-crimson' | 'modern-emerald' | 'custom';
   customBackgroundData?: string; // base64 or URL
   placeholders: PlaceholderConfig[];
   qrConfig: QrConfig;
